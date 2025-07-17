@@ -48,6 +48,10 @@ const client = new Client({
 console.log('[WHATSAPP] Initializing client...');
 client.initialize();
 
+// --- Global variables to store current contacts and scheduled jobs ---
+let currentContacts = [];
+const scheduledJobs = {}; // Stores timeouts for agenda messages {jobId: {timeoutId: ..., agendaItem: ...}}
+
 // --- Socket.IO Connection Handling ---
 io.on('connection', (socket) => {
     console.log('[SOCKET] A user connected');
@@ -75,32 +79,112 @@ io.on('connection', (socket) => {
     // Event: WhatsApp client is ready
     client.on('ready', () => {
         console.log('[WHATSAPP] Client is ready!');
-        socket.emit('log', '✅ WhatsApp client is ready and connected.');
+        socket.emit('log', '✅ WhatsApp client is ready and connected. It will remain logged in.');
         socket.emit('status', { message: 'Ready', color: 'green' });
         socket.emit('ready'); // Signal frontend to enable buttons etc.
+        // Also send summary of currently scheduled jobs if any exist
+        const activeAgenda = Object.values(scheduledJobs).map(job => job.agendaItem);
+        if (activeAgenda.length > 0) {
+            socket.emit('agenda-scheduled-summary', activeAgenda);
+        }
     });
 
     // Event: WhatsApp client disconnected
     client.on('disconnected', (reason) => {
         console.log('[WHATSAPP] Client was logged out', reason);
-        socket.emit('log', '❌ WhatsApp client disconnected. Please scan the new QR code.');
+        socket.emit('log', '❌ WhatsApp client disconnected. Please scan a new QR code to log back in.');
         socket.emit('status', { message: 'Disconnected', color: 'red' });
+        // Clear all scheduled jobs if client disconnects
+        clearAllScheduledJobs(socket);
+        io.emit('agenda-scheduled-summary', []); // Clear summary on frontend
         // The client will try to re-initialize and generate a new QR code automatically
         client.initialize(); 
     });
 
-    // Listen for the 'start-automation' event from the frontend
+    // Listen for the 'start-automation' event from the frontend (for immediate campaigns)
     socket.on('start-automation', async (data) => {
         console.log('[AUTOMATION] Received start signal with data:', data);
         const { contacts, messageTemplate } = data;
 
         if (!contacts || !messageTemplate) {
             socket.emit('log', '❌ Error: Contacts or message template is missing.');
+            socket.emit('ready'); // Re-enable buttons if error
             return;
         }
 
+        currentContacts = contacts; // Store contacts for agenda use
         await runAutomation(socket, contacts, messageTemplate);
+        // After automation, re-enable buttons on frontend
+        socket.emit('ready'); // Re-emit ready to enable buttons
     });
+
+    // Listen for the 'schedule-agenda' event from the frontend
+    socket.on('schedule-agenda', async (data) => {
+        console.log('[AGENDA] Received agenda scheduling data:', data);
+        const { contacts, agenda } = data;
+
+        if (!contacts || contacts.length === 0) {
+            socket.emit('log', '❌ Error: No contacts provided for agenda scheduling. Please fill in the contacts section.');
+            socket.emit('ready'); // Re-enable buttons
+            return;
+        }
+        if (!agenda || agenda.length === 0) {
+            socket.emit('log', '❌ Error: No agenda events provided for scheduling.');
+            socket.emit('ready'); // Re-enable buttons
+            return;
+        }
+
+        currentContacts = contacts; // Store contacts for agenda use
+
+        socket.emit('log', '🗓️ Clearing previous agenda schedules...');
+        clearAllScheduledJobs(socket); // Clear any existing schedules before setting new ones
+
+        socket.emit('log', `🗓️ Scheduling ${agenda.length} agenda messages...`);
+        socket.emit('status', { message: 'Scheduling Agenda...', color: 'blue' });
+
+        const scheduledEventsForSummary = [];
+
+        for (const item of agenda) {
+            const { date, time, message } = item;
+            const scheduledDateTime = new Date(`${date}T${time}:00`);
+            const now = new Date();
+
+            if (scheduledDateTime <= now) {
+                socket.emit('log', `⚠️ Skipping past event for ${date} ${time}.`);
+                continue;
+            }
+
+            const delayMs = scheduledDateTime.getTime() - now.getTime();
+            const jobId = `agenda-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`; // Unique ID for the job
+
+            // Store the agenda item with the job ID for summary purposes
+            scheduledJobs[jobId] = {
+                timeoutId: setTimeout(async () => {
+                    socket.emit('log', `⏰ Sending scheduled message for ${date} ${time}...`);
+                    if (client.info) { // Only send if client is still logged in
+                        await sendPersonalizedMessages(socket, currentContacts, message);
+                    } else {
+                        socket.emit('log', `⚠️ Client not logged in. Message for ${date} ${time} not sent.`);
+                    }
+                    // After execution, remove from scheduledJobs and potentially update frontend summary
+                    delete scheduledJobs[jobId]; 
+                    // Optional: Re-emit agenda-scheduled-summary to update the list, showing only remaining events
+                    io.emit('agenda-scheduled-summary', Object.values(scheduledJobs).map(job => job.agendaItem));
+                }, delayMs),
+                agendaItem: item // Store the original agenda item for the summary
+            };
+            scheduledEventsForSummary.push(item); // Add to a temporary list for immediate summary
+
+            socket.emit('log', `✅ Scheduled message for ${date} ${time}. (Will send in approx. ${Math.ceil(delayMs / 1000 / 60)} minutes)`);
+        }
+        socket.emit('log', '🎉 All agenda messages have been scheduled!');
+        socket.emit('status', { message: 'Agenda Scheduled', color: 'green' });
+        socket.emit('ready'); // Re-enable buttons after scheduling
+
+        // Emit the final list of scheduled events to the frontend
+        io.emit('agenda-scheduled-summary', scheduledEventsForSummary);
+    });
+
 
     // Listen for a manual session reset from the client
     socket.on('reset-session', async () => {
@@ -108,6 +192,10 @@ io.on('connection', (socket) => {
         socket.emit('log', 'Manual reset requested. Logging out...');
         socket.emit('status', { message: 'Resetting...', color: 'yellow' });
         
+        // Clear all scheduled jobs
+        clearAllScheduledJobs(socket);
+        io.emit('agenda-scheduled-summary', []); // Clear summary on frontend
+
         // Destroy the client instance and delete session files
         if (client) {
             try {
@@ -120,8 +208,7 @@ io.on('connection', (socket) => {
         }
         
         // Delete the session files to ensure a clean slate
-        // Ensure this path matches the actual session directory created by whatsapp-web.js
-        const sessionPath = './.wwebjs_auth/session'; 
+        const sessionPath = './.wwebjs_auth/session'; // Default path for LocalAuth
         if (fs.existsSync(sessionPath)) {
             fs.rm(sessionPath, { recursive: true, force: true }, (err) => {
                 if (err) {
@@ -142,15 +229,41 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         console.log('[SOCKET] User disconnected');
+        // Note: We don't clear jobs on simple disconnect, only on client.disconnected or manual reset
+        // The WhatsApp client itself handles persistent login, so server restart or UI close
+        // won't log out the WhatsApp client unless session files are deleted or client disconnects from WhatsApp side.
     });
 });
 
+// --- Helper to clear all scheduled jobs ---
+function clearAllScheduledJobs(socket) {
+    for (const jobId in scheduledJobs) {
+        clearTimeout(scheduledJobs[jobId].timeoutId); // Clear the actual timeout
+        delete scheduledJobs[jobId];
+    }
+    socket.emit('log', 'All pending agenda schedules cleared.');
+    console.log('[AGENDA] All pending agenda schedules cleared.');
+}
 
-// --- Automation Logic ---
+// --- Automation Logic (for immediate campaigns) ---
 async function runAutomation(socket, contacts, messageTemplate) {
-    socket.emit('log', '🚀 Starting automation process...');
-    socket.emit('status', { message: 'Sending...', color: 'blue' });
+    socket.emit('log', '🚀 Starting immediate campaign process...');
+    socket.emit('status', { message: 'Sending Campaign...', color: 'blue' });
 
+    if (client.info) { // Check if client is still logged in before sending
+        await sendPersonalizedMessages(socket, contacts, messageTemplate);
+    } else {
+        socket.emit('log', '⚠️ WhatsApp client not logged in. Cannot send immediate campaign.');
+    }
+
+    const finalMsg = '🎉 Immediate campaign processing finished! Client remains connected.';
+    console.log(finalMsg);
+    socket.emit('log', finalMsg);
+    socket.emit('status', { message: 'Campaign Finished', color: 'green' });
+}
+
+// --- Generic function to send personalized messages to a list of contacts ---
+async function sendPersonalizedMessages(socket, contacts, messageTemplate) {
     function delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -203,12 +316,6 @@ async function runAutomation(socket, contacts, messageTemplate) {
         socket.emit('log', waitMsg);
         await delay(waitTime);
     }
-
-    const finalMsg = '🎉 All messages have been processed! Client remains connected.';
-    console.log(finalMsg);
-    socket.emit('log', finalMsg);
-    socket.emit('status', { message: 'Finished', color: 'green' });
-    // Keep the client active, do not logout automatically
 }
 
 

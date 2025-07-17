@@ -37,6 +37,12 @@
             70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
         }
+        /* Tab styling */
+        .tab-button.active {
+            border-bottom: 2px solid #4f46e5; /* Indigo-600 */
+            color: #4f46e5;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -70,7 +76,7 @@
 
                     <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
                         <button id="start-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">
-                            Start Automation
+                            Start Immediate Campaign
                         </button>
                         <button id="reset-btn" class="w-full sm:w-auto bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">
                             Reset (Change Number)
@@ -83,7 +89,7 @@
                 <h2 class="text-2xl font-semibold mb-4 border-b pb-3">2. Monitor Progress</h2>
                 
                 <div id="qr-container" class="text-center p-4 border-2 border-dashed border-gray-300 rounded-lg mb-4 hidden">
-                    <p class="font-medium mb-2">Scan with WhatsApp on your phone</p>
+                    <p class="font-medium mb-2">Scan with WhatsApp on your phone to log in.</p>
                     <img id="qr-image" src="" alt="QR Code" class="mx-auto w-64 h-64">
                 </div>
 
@@ -94,6 +100,113 @@
                 </div>
             </div>
         </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg mt-8">
+            <h2 class="text-2xl font-semibold mb-4 border-b pb-3">3. Schedule Agenda Messages</h2>
+            
+            <div class="flex border-b border-gray-200 mb-4">
+                <button class="tab-button py-2 px-4 text-gray-600 hover:text-indigo-600 focus:outline-none active" data-day="day1">Day 1</button>
+                <button class="tab-button py-2 px-4 text-gray-600 hover:text-indigo-600 focus:outline-none" data-day="day2">Day 2</button>
+                <button class="tab-button py-2 px-4 text-gray-600 hover:text-indigo-600 focus:outline-none" data-day="day3">Day 3</button>
+            </div>
+
+            <div id="agenda-content" class="space-y-6">
+                <div id="day1-agenda" class="agenda-day-content" data-day="day1">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-medium text-gray-800">Day 1 Events</h3>
+                        <button class="add-event-btn bg-green-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-green-600 transition duration-200" data-day="day1">Add Event</button>
+                    </div>
+                    <div class="events-container space-y-4">
+                        <div class="event-slot p-4 border border-gray-200 rounded-lg bg-gray-50">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Date</label>
+                                    <input type="date" class="event-date w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Time</label>
+                                    <input type="time" class="event-time w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                                <div class="flex items-end">
+                                    <button class="remove-event-btn w-full bg-red-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-red-600 transition duration-200">Remove</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-600 mb-1">Message</label>
+                                <textarea rows="3" class="event-message w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="Hey {name}, Day 1 is starting soon!"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="day2-agenda" class="agenda-day-content hidden" data-day="day2">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-medium text-gray-800">Day 2 Events</h3>
+                        <button class="add-event-btn bg-green-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-green-600 transition duration-200" data-day="day2">Add Event</button>
+                    </div>
+                    <div class="events-container space-y-4">
+                        <div class="event-slot p-4 border border-gray-200 rounded-lg bg-gray-50">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Date</label>
+                                    <input type="date" class="event-date w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Time</label>
+                                    <input type="time" class="event-time w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                                <div class="flex items-end">
+                                    <button class="remove-event-btn w-full bg-red-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-red-600 transition duration-200">Remove</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-600 mb-1">Message</label>
+                                <textarea rows="3" class="event-message w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="Hey {name}, Day 2 updates are here!"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="day3-agenda" class="agenda-day-content hidden" data-day="day3">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-medium text-gray-800">Day 3 Events</h3>
+                        <button class="add-event-btn bg-green-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-green-600 transition duration-200" data-day="day3">Add Event</button>
+                    </div>
+                    <div class="events-container space-y-4">
+                        <div class="event-slot p-4 border border-gray-200 rounded-lg bg-gray-50">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Date</label>
+                                    <input type="date" class="event-date w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Time</label>
+                                    <input type="time" class="event-time w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                                <div class="flex items-end">
+                                    <button class="remove-event-btn w-full bg-red-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-red-600 transition duration-200">Remove</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-600 mb-1">Message</label>
+                                <textarea rows="3" class="event-message w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="Hey {name}, final day wrap-up!"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="schedule-agenda-btn" class="w-full mt-6 bg-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">
+                Schedule Agenda Messages
+            </button>
+
+            <div id="scheduled-events-summary" class="mt-8 p-4 bg-gray-50 border border-gray-200 rounded-lg hidden">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">✅ Upcoming Scheduled Events:</h3>
+                <ul id="events-list" class="list-disc list-inside text-gray-700 space-y-1">
+                    </ul>
+            </div>
+        </div>
+
     </div>
 
     <script src="/script.js"></script> 
