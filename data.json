@@ -1,0 +1,324 @@
+[
+  {
+    "S.No.": 1,
+    "Employee Name": "Mr. Aaditya Gupta",
+    "Email": "AADITYA2.GUPTA@RIL.COM",
+    "Phone Number": 8929706911
+  },
+  {
+    "S.No.": 2,
+    "Employee Name": "Mr. Abhilash Ashok chandanshiv",
+    "Email": "ABHILASH.ASHOK@RIL.COM",
+    "Phone Number": 8310104654
+  },
+  {
+    "S.No.": 3,
+    "Employee Name": "Mr. Aniket Wagle",
+    "Email": "ANIKET.WAGLE@RIL.COM",
+    "Phone Number": 8169523071
+  },
+  {
+    "S.No.": 4,
+    "Employee Name": "Mr. Apurva Khandare",
+    "Email": "APURVA.KHANDARE@RIL.COM",
+    "Phone Number": 9888973973
+  },
+  {
+    "S.No.": 5,
+    "Employee Name": "Mr. Astitva Kumar",
+    "Email": "ASTITVA.KUMAR@RIL.COM",
+    "Phone Number": 9711063157
+  },
+  {
+    "S.No.": 6,
+    "Employee Name": "Mr. Ayush Gupta",
+    "Email": "AYUSH10.GUPTA@RIL.COM",
+    "Phone Number": 6268890208
+  },
+  {
+    "S.No.": 7,
+    "Employee Name": "Mr. Bhushan Nadoni",
+    "Email": "BHUSHAN.NADONI@RIL.COM",
+    "Phone Number": 8335007250
+  },
+  {
+    "S.No.": 8,
+    "Employee Name": "Mr. Harikrishnan Rajesh",
+    "Email": "HARIKRISHNAN9.R@RIL.COM",
+    "Phone Number": 9188862907
+  },
+  {
+    "S.No.": 9,
+    "Employee Name": "Mr. Kavish Veerendrasingh Uppal",
+    "Email": "KAVISH.V@RIL.COM",
+    "Phone Number": 8999852972
+  },
+  {
+    "S.No.": 10,
+    "Employee Name": "Mr. Kshitij Bhatia",
+    "Email": "KSHITIJ.BHATIA@RIL.COM",
+    "Phone Number": 6361508278
+  },
+  {
+    "S.No.": 11,
+    "Employee Name": "Mr. Madhur Yadav",
+    "Email": "MADHUR.YADAV@RIL.COM",
+    "Phone Number": 9582314241
+  },
+  {
+    "S.No.": 12,
+    "Employee Name": "Mr. Prateek Gaikwad",
+    "Email": "PRATEEK.GAIKWAD@RIL.COM",
+    "Phone Number": 8586973426
+  },
+  {
+    "S.No.": 13,
+    "Employee Name": "Mr. Ram badsha Sitlani",
+    "Email": "RAM.SITLANI@RIL.COM",
+    "Phone Number": 9993339988
+  },
+  {
+    "S.No.": 14,
+    "Employee Name": "Mr. Rehan Shaikh",
+    "Email": "REHAN9.SHAIKH@RIL.COM",
+    "Phone Number": 9920515438
+  },
+  {
+    "S.No.": 15,
+    "Employee Name": "Mr. Samarsingh Thorat",
+    "Email": "SAMARSINGH.THORAT@RIL.COM",
+    "Phone Number": 9664590441
+  },
+  {
+    "S.No.": 16,
+    "Employee Name": "Mr. Satyam Gupta",
+    "Email": "SATYAM1.GUPTA@RIL.COM",
+    "Phone Number": 9769145892
+  },
+  {
+    "S.No.": 17,
+    "Employee Name": "Mr. Saurabh Deshpande",
+    "Email": "SAURABH1.DESHPANDE@RIL.COM",
+    "Phone Number": 8850251246
+  },
+  {
+    "S.No.": 18,
+    "Employee Name": "Mr. Shreyas Janmali",
+    "Email": "SHREYAS.JANMALI@RIL.COM",
+    "Phone Number": 7020573160
+  },
+  {
+    "S.No.": 19,
+    "Employee Name": "Mr. Tanmay Verma",
+    "Email": "TANMAY.VERMA@RIL.COM",
+    "Phone Number": 9791179159
+  },
+  {
+    "S.No.": 20,
+    "Employee Name": "Mr. Tanuj Verma",
+    "Email": "TANUJ.VERMA@RIL.COM",
+    "Phone Number": 7977841292
+  },
+  {
+    "S.No.": 21,
+    "Employee Name": "Mr. Tushar Nakhate",
+    "Email": "TUSHAR.NAKHATE@RIL.COM",
+    "Phone Number": 8928525128
+  },
+  {
+    "S.No.": 22,
+    "Employee Name": "Mr. Utkarsh Gupta",
+    "Email": "UTKARSH2.GUPTA@RIL.COM",
+    "Phone Number": 9653265378
+  },
+  {
+    "S.No.": 23,
+    "Employee Name": "Ms. Abhipsa Satpathy",
+    "Email": "ABHIPSA.SATPATHY@RIL.COM",
+    "Phone Number": 7978409760
+  },
+  {
+    "S.No.": 24,
+    "Employee Name": "Ms. Aditi Kumari",
+    "Email": "ADITI.KUMARI@RIL.COM",
+    "Phone Number": 9711965037
+  },
+  {
+    "S.No.": 25,
+    "Employee Name": "Ms. Aditi Srivastava",
+    "Email": "ADITI.SRIVASTAVA@RIL.COM",
+    "Phone Number": 9643646115
+  },
+  {
+    "S.No.": 26,
+    "Employee Name": "Ms. Anurupa Bose",
+    "Email": "ANURUPA.BOSE@RIL.COM"
+  },
+  {
+    "S.No.": 27,
+    "Employee Name": "Ms. Dipali Desai",
+    "Email": "DIPALI.DESAI@RIL.COM",
+    "Phone Number": 9920024200
+  },
+  {
+    "S.No.": 28,
+    "Employee Name": "Ms. Maya Ramachandran",
+    "Email": "MAYA.RAMACHANDRAN@RIL.COM",
+    "Phone Number": 9326715386
+  },
+  {
+    "S.No.": 29,
+    "Employee Name": "Ms. Megha Raturi",
+    "Email": "MEGHA.RATURI@RIL.COM",
+    "Phone Number": 9364889752
+  },
+  {
+    "S.No.": 30,
+    "Employee Name": "Ms. Monika RATHI",
+    "Email": "MONIKA.RATHI@RIL.COM",
+    "Phone Number": 9739793090
+  },
+  {
+    "S.No.": 31,
+    "Employee Name": "Ms. Nikita Sailesh Poll",
+    "Email": "NIKITA.POLL@RIL.COM",
+    "Phone Number": 9916470865
+  },
+  {
+    "S.No.": 32,
+    "Employee Name": "Ms. Nivedita Yadav",
+    "Email": "NIVEDITA.YADAV@RIL.COM",
+    "Phone Number": 9082231351
+  },
+  {
+    "S.No.": 33,
+    "Employee Name": "Ms. Priyam Tikkiwal",
+    "Email": "PRIYAM.TIKKIWAL@RIL.COM",
+    "Phone Number": 9167158558
+  },
+  {
+    "S.No.": 34,
+    "Employee Name": "Ms. Sanjoli Chauhan",
+    "Email": "SANJOLI.CHAUHAN@RIL.COM",
+    "Phone Number": 7600816346
+  },
+  {
+    "S.No.": 35,
+    "Employee Name": "Ms. Shalaka Kamat",
+    "Email": "SHALAKA.KAMAT@RIL.COM",
+    "Phone Number": 8976001673
+  },
+  {
+    "S.No.": 36,
+    "Employee Name": "Ms. Simar Jolly",
+    "Email": "SIMAR.JOLLY@RIL.COM",
+    "Phone Number": 9768451812
+  },
+  {
+    "S.No.": 37,
+    "Employee Name": "Ms. Snehal Agrawal",
+    "Email": "SNEHAL.AGRAWAL@RIL.COM",
+    "Phone Number": 9820540652
+  },
+  {
+    "S.No.": 38,
+    "Employee Name": "Ms. Tanya Abraham Ganguly",
+    "Email": "TANYA.ABRAHAM@RIL.COM",
+    "Phone Number": 8420036202
+  },
+  {
+    "S.No.": 39,
+    "Employee Name": "Ms. Trisha Singh",
+    "Email": "TRISHA.SINGH@RIL.COM",
+    "Phone Number": 6361517193
+  },
+  {
+    "S.No.": 40,
+    "Employee Name": "Mr. Saksham Sarin",
+    "Email": "saksham.sarin@ril.com",
+    "Phone Number": 8699327218
+  },
+  {
+    "S.No.": 41,
+    "Employee Name": "Mr. Krishna kumar Choudhary",
+    "Email": "KRISHNA3.CHOUDHARY@RIL.COM",
+    "Phone Number": 8451004399
+  },
+  {
+    "S.No.": 42,
+    "Employee Name": "Mr. Rahul Bhuyan",
+    "Email": "RAHUL.BHUYAN@RIL.COM",
+    "Phone Number": 9819877947
+  },
+  {
+    "S.No.": 43,
+    "Employee Name": "Mr. Sourav Singh",
+    "Email": "SOURAV6.SINGH@RIL.COM",
+    "Phone Number": 6291320730
+  },
+  {
+    "S.No.": 44,
+    "Employee Name": "Mr. Nishchal Sharma",
+    "Email": "NISHCHAL1.SHARMA@RIL.COM",
+    "Phone Number": 7987596311
+  },
+  {
+    "S.No.": 45,
+    "Employee Name": "Arpan Basu",
+    "Email": "arpan1.basu@ril.com",
+    "Phone Number": 9818083556
+  },
+  {
+    "S.No.": 46,
+    "Employee Name": "Arnab Dutta",
+    "Email": "arnab3.dutta@ril.com",
+    "Phone Number": 8860368307
+  },
+  {
+    "S.No.": 47,
+    "Employee Name": "Alok Priya Azad",
+    "Email": "alok.Priya@ril.com",
+    "Phone Number": 9540096681
+  },
+  {
+    "S.No.": 48,
+    "Employee Name": "Atul Rajbhushan",
+    "Phone Number": 9711265009
+  },
+  {
+    "S.No.": 49,
+    "Employee Name": "Damodar Rao",
+    "Email": "damodar.Rao@ril.com",
+    "Phone Number": 9880604589
+  },
+  {
+    "S.No.": 50,
+    "Employee Name": "Prachi Pathak",
+    "Email": "prachi1.Pathak@ril.com",
+    "Phone Number": 7977393192
+  },
+  {
+    "S.No.": 51,
+    "Employee Name": "Shraddha Bose",
+    "Email": "shraddha.Bose@ril.com",
+    "Phone Number": 7566664313
+  },
+  {
+    "S.No.": 52,
+    "Employee Name": "Somesh Shukla",
+    "Email": "somesh1.shukla@ril.com",
+    "Phone Number": 9839001884
+  },
+  {
+    "S.No.": 53,
+    "Employee Name": "Swapnalika Singh",
+    "Email": "swapnalika.singh@ril.com",
+    "Phone Number": 919513999424
+  },
+  {
+    "S.No.": 54,
+    "Employee Name": "Shantanu Paul",
+    "Email": "shantanu.paul@ril.com",
+    "Phone Number": 9023979033
+  }
+]
